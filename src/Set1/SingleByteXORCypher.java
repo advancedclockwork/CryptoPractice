@@ -36,7 +36,7 @@ public class SingleByteXORCypher {
         boolean validChars = true;
         for(int i = 0; i < result.length(); i++){
             Character current = result.charAt(i);
-            if(current.toString().matches("[^a-z A-Z0-9]//w")){
+            if(current.toString().matches("[^a-z A-Z 0-9]//w")){
                 System.out.println(current.toString());
                 validChars = false;
             }
