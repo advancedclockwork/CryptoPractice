@@ -15,29 +15,39 @@ import java.util.List;
  */
 public class CharacterFrequencies {
     
-    private List<character> characters = new ArrayList<character>();
-    private String message;
+    private final List<character> characters = new ArrayList<>();
+    private final String message;
+    
     public CharacterFrequencies(String message){
-        message = this.message;
+        this.message = message;
         createList();
     }
     
     private void createList(){
         for(int i = 0; i < message.length(); i++){
-            String current = message.charAt(i) + "";
-            boolean newEntry = true;
-            for(int j = 0; j < characters.size(); j++){
-                if(characters.get(j).getCharacter().equals(current)){
-                    characters.get(j).increaseFrequency();
-                    newEntry = false;
-                    break;
+            String current = "" + message.charAt(i);
+            System.out.println("current: " + current);
+            /*boolean newEntry = true;
+            if(characters.isEmpty()){
+                character entry = new character(current);
+                characters.add(entry);
+            }
+            else{
+                for(int j = 0; j < characters.size(); j++){
+                    if(characters.get(j).getCharacter().equals(current)){
+                        characters.get(j).increaseFrequency();
+                        newEntry = false;
+                        break;
+                    }
+                }
+                if(newEntry){
+                    character entry = new character(current);
+                    characters.add(entry);
                 }
             }
-            if(newEntry){
-                characters.add(new character(current));
-            }
+*/
         }
-        characters.sort(Comparator.comparing(character::getFrequency));
+        //characters.sort(Comparator.comparing(character::getFrequency));
     }
     
     public String getMostFrequent(){
@@ -45,18 +55,19 @@ public class CharacterFrequencies {
     }
     
     public List<String> getAllFrequencies(){
-        List<String> toReturn = new ArrayList<String>();
+        List<String> toReturn = new ArrayList<>();
         for(int i = 0; i < characters.size(); i++){
             toReturn.add(characters.get(i).getCharacter());
         }
         return toReturn;
     }
     
-    private class character{
-        String character;
-        int frequency;
+    public class character{
+        private String character = "";
+        private int frequency;
+        
         public character(String character){
-            character = this.character;
+            this.character = character;
             frequency = 1;
         }
         

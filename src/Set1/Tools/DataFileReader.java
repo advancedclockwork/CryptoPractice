@@ -25,19 +25,19 @@ public class DataFileReader{
     
     public DataFileReader(String fileLocation) throws IOException{
         File file = new File(fileLocation);
-        charData = new ArrayList<character>();
+        charData = new ArrayList<>();
         
-        DataInputStream stream = new DataInputStream(new BufferedInputStream(new FileInputStream(file)));
-        while(stream.available()>0){
-            String temp = "";
-            charData.add(new character(temp + stream.readChar(),stream.readDouble()));
+        try (DataInputStream stream = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
+            while(stream.available()>0){
+                String temp = "";
+                charData.add(new character(temp + stream.readChar(),stream.readDouble()));
+            }
         }
-        stream.close();
         charData.sort(Comparator.comparing(character::getRate));
     }
     
     public List<String> getData(){
-        List<String> toReturn = new ArrayList<String>();
+        List<String> toReturn = new ArrayList<>();
         for(int i = 0; i < charData.size(); i++){
             toReturn.add(charData.get(i).getCharacter());
         }
@@ -45,11 +45,11 @@ public class DataFileReader{
     }
     
     private class character{
-        private final String character = null;
-        private final Double rate = null;
+        private String character = null;
+        private Double rate = null;
         public character(String character, Double rate){
-            character = this.character;
-            rate = this.rate;
+            this.character = character;
+            this.rate = rate;
         }
         
         public String getCharacter(){
