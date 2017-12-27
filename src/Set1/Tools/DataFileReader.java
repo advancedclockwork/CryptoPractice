@@ -5,10 +5,9 @@
  */
 package Set1.Tools;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,19 +20,22 @@ import java.util.List;
 public class DataFileReader{
 
     File file;
-    private final List<character> charData;
+    private final List<Character> charData;
     
     public DataFileReader(String fileLocation) throws IOException{
         File file = new File(fileLocation);
         charData = new ArrayList<>();
         
-        try (DataInputStream stream = new DataInputStream(new BufferedInputStream(new FileInputStream(file)))) {
-            while(stream.available()>0){
-                String temp = "";
-                charData.add(new character(temp + stream.readChar(),stream.readDouble()));
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String temp;
+            while((temp = br.readLine()) != null){
+                String[] strings = temp.split(" ");
+                //System.out.println("char: " + strings[0] + " rate: " + strings[1]);
+                Character current = new Character(strings[0], Double.parseDouble(strings[1]));
+                charData.add(current);
             }
         }
-        charData.sort(Comparator.comparing(character::getRate));
+        charData.sort(Comparator.comparing(Character::getRate));
     }
     
     public List<String> getData(){
@@ -44,10 +46,10 @@ public class DataFileReader{
         return toReturn;
     }
     
-    private class character{
+    private class Character{
         private String character = null;
         private Double rate = null;
-        public character(String character, Double rate){
+        public Character(String character, Double rate){
             this.character = character;
             this.rate = rate;
         }

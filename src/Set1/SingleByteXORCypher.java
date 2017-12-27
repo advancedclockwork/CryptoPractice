@@ -18,7 +18,6 @@ public class SingleByteXORCypher {
         System.out.println("please enter your encoded text");
         Scanner scan = new Scanner(System.in);
         String message = scan.nextLine();
-        System.out.println("message confirmation: " + message);
         Decryptor decryptor = new Decryptor(message);
         System.out.println(decryptor.getMostPossible());
     }
